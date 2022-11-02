@@ -14,7 +14,7 @@ function SignupScreen() {
       setIsAutheticating(false)
     } catch (err) {
       setIsAutheticating(false)
-      console.log(err.message)
+      Alert.alert('Authentication failed!', 'Could not create user. Try again later.')
     }
   }
 

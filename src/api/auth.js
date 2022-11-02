@@ -2,16 +2,22 @@ import axios from "axios"
 
 const APP_KEY = 'AIzaSyA3SxUlwDy8Z2A0SMIW3CWtoC1538EU03U'
 
-export const createUser = async ({email, password}) => {
-    console.log(email, password)
-    const response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=` + APP_KEY,
-        {
-            email,
-            password,
-            returnSecureToken: true
-        }
-    )
+const authenticate = async (mode, email, password) => {
+    const url = `https://identitytoolkit.googleapis.com/v1/accounts:${mode}?key=${APP_KEY}`
 
-    return response
+    const response = await axios.post(url, {
+        email,
+        password,
+        returnSecureToken: true
+    })
+
+    console.log(response.data)
+}
+
+export const createUser = async ({email, password}) => {
+    await authenticate('signUp', email, password)
+}
+
+export const login = async ({email, password}) => {
+    await authenticate('signInWithPassword', email, password)
 }
